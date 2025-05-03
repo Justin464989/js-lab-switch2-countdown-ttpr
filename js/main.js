@@ -40,7 +40,7 @@ function CountDownToMario(endTime, divId) {
 
   /* STEP 2: Declare any variables you’ll need here
             (e.g. interval id). */
-
+    
   /* STEP 3: Write an inner `showRemaining()` function:
        • get current time (`new Date()`)
        • figure out the distance to launch
@@ -49,12 +49,47 @@ function CountDownToMario(endTime, divId) {
        • pad units to two digits (see hints below)
        • update `document.getElementById(divId).textContent`
   */
+    function showRemaining() {
+        let currentTime = new Date();
+        let distance = end - currentTime;
+        const div    = document.getElementById(divId);
+        const target = new Date(div.dataset.release);
 
+        if(distance <= 0) {
+            div.textContent = "Switch 2 is out! 🎉";
+            
+        } else {
+            let days = distance / _day;
+            distance = distance % _day;
+            
+            let hrs = distance / _hour;
+            distance = distance % _hour;
+
+            let mins = distance / _minute;
+            distance = distance % _minute;
+
+            let secs = distance / _second;
+            //broke distance into days / hrs / mins / secs
+
+            days = Math.floor(days);
+            hrs = Math.floor(hrs);
+            mins = Math.floor(mins);
+            secs = Math.floor(secs);
+            const dayPad = String(days).padStart(2, '0');
+            const hrsPad = String(hrs).padStart(2, '0');
+            const minsPad = String(mins).padStart(2, '0');
+            const secsPad = String(secs).padStart(2, '0');
+            //padded units to two digits
+            
+            div.textContent = dayPad + " days, " + hrsPad + " hours, " + minsPad + " minutes, " + secsPad + " seconds";
+        }
+    }
   /* STEP 4: Call `showRemaining()` once so the timer
             appears immediately. */
-
+    showRemaining();
   /* STEP 5: Repeat `showRemaining()` every second
             with `setInterval`. */
+    setInterval(showRemaining, 1000);
 }
 
 /* ======================================================
@@ -76,4 +111,4 @@ function CountDownToMario(endTime, divId) {
 /* ======================================================
    🎉  BONUS  — optional extras
    ------------------------------------------------------
-   • Add a confetti explosion (see confetti.js) - Check js in 
+   • Add a confetti explosion (see confetti.js) - Check js in */
